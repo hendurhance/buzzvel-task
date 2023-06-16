@@ -21,6 +21,6 @@ class TaskNotOwnedByUser extends Exception
 
     public function render($request)
     {
-        return $this->error($this->getMessage(), null, Response::HTTP_UNAUTHORIZED);
+        return $this->error($this->getMessage(), null, Response::HTTP_FORBIDDEN);
     }
 }

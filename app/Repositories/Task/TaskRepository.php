@@ -78,13 +78,13 @@ class TaskRepository implements TaskRepositoryInterface
         $task = $user->tasks()->create(
             [
                 'title' => $data['title'],
-                'description' => $data['description'],
+                'description' => $data['description'] ?? null,
                 'completed' => $data['completed'] ?? false,
-                'completed_at' => $data['completed_at'] ?? null
+                'completed_at' => $data['completed'] ? Carbon::now() : null
             ]
         );
 
-       $this->fileRepository->uploadMany($data['files'] ?? [], 'public', $task);
+       $this->fileRepository->uploadMany($data['files'] ?? [], $task);
 
         return $task->load('user', 'files');
     }
@@ -103,7 +103,7 @@ class TaskRepository implements TaskRepositoryInterface
                 'title' => $data['title'] ?? $task->title,
                 'description' => $data['description'] ?? $task->description,
                 'completed' => $data['completed'] ?? $task->completed,
-                'completed_at' => $data['completed_at'] ?? $task->completed_at
+                'completed_at' => $data['completed'] ? Carbon::now() : null
             ]
         );
 
@@ -118,8 +118,8 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function delete(int $id)
     {
-        $task = $this->findById($id);
-        $task->destroy();
+        $task = $this->userOwnsTask($id);
+        $task->delete();
     }
 
     /**

@@ -19,8 +19,6 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         $bool = $this->faker->boolean;
-        $fileIds = File::pluck('id')->toArray();
-        $fileArray = [$fileIds, []];
         $userIds = User::pluck('id')->toArray();
         return [
             'user_id' => $this->faker->randomElement($userIds),
@@ -28,7 +26,6 @@ class TaskFactory extends Factory
             'description' => $this->faker->paragraphs(3, true),
             'completed' => $bool,
             'completed_at' => $bool ?  $this->faker->dateTimeBetween('-1 month', 'now') : null,
-            'file' => $this->faker->randomElement($fileArray),
         ];
     }
 }

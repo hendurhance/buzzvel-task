@@ -24,8 +24,6 @@ class UpdateTaskRequest extends FormRequest
         return [
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string|max:1024',
-            'files' => 'nullable|array',
-            'files.*' => 'nullable|file|max:1024',
             'completed' => 'nullable|boolean'
         ];
     }
