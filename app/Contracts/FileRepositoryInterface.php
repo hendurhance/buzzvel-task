@@ -17,5 +17,5 @@ interface FileRepositoryInterface
      * @param Task $task
      * @return void
      */
-    public function uploadMany(array $file, string $disk = 'public', Task $task): void;
+    public function uploadMany(array $file, Task $task): void;
 }
