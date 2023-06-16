@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index()->unique()->comment('UUID to allow easy migration between envs without breaking FK in the logic');
             $table->string('name');
             $table->string('path');
             $table->string('size');

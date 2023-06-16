@@ -23,13 +23,13 @@ public function authorize(): bool
     {
         return [
             'search' => 'nullable|string',
-            'sort' => 'nullable|string|in:uuid,title,description,created_at,updated_at,completed_at',
+            'sort' => 'nullable|string|in:id,title,description,created_at,updated_at,completed_at',
             'completed' => 'nullable|boolean',
             'limit' => 'nullable|integer',
             'offset' => 'nullable|integer',
             'order' => 'nullable|string|in:asc,desc',
-            'from' => 'nullable|date',
-            'to' => 'nullable|date',
+            'from' => 'nullable|date:Y-m-d',
+            'to' => 'nullable|date:Y-m-d',
         ];
     }
 }

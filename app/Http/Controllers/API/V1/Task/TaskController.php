@@ -23,6 +23,9 @@ class TaskController extends Controller
 
     /**
      * Display a listing of the task.
+     *
+     * @param GetTasksRequest $request
+     * @return HttpResponse
      */
     public function index(GetTasksRequest $request)
     {
@@ -32,6 +35,9 @@ class TaskController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param CreateTaskRequest $request
+     * @return HttpResponse
      */
     public function store(CreateTaskRequest $request)
     {
@@ -41,28 +47,38 @@ class TaskController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param int $id
+     * @return HttpResponse
      */
-    public function show(string $uuid)
+    public function show(int $id)
     {
-        $task = $this->taskRepository->findById($uuid);
+        $task = $this->taskRepository->findById($id);
         return $this->success(TaskResource::make($task), 'Task retrieved successfully');
     }
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateTaskRequest $request
+     * @param int $id
+     * @return HttpResponse
      */
-    public function update(UpdateTaskRequest $request, string $uuid)
+    public function update(UpdateTaskRequest $request, int $id)
     {
-        $task = $this->taskRepository->update($request->validated(), $uuid);
+        $task = $this->taskRepository->update($request->validated(), $id);
         return $this->success(TaskResource::make($task), 'Task updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return HttpResponse
      */
-    public function delete(string $uuid)
+    public function delete(int $id)
     {
-        $this->taskRepository->delete($uuid);
+        $this->taskRepository->delete($id);
         return $this->success(null, 'Task deleted successfully', Response::HTTP_NO_CONTENT);
     }
 }
