@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Task;
 
+use App\Contracts\FileRepositoryInterface;
 use App\Contracts\TaskRepositoryInterface;
 use App\Exceptions\Task\TaskDoesNotExist;
 use App\Exceptions\Task\TaskNotOwnedByUser;
@@ -12,8 +13,11 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository implements TaskRepositoryInterface
 {
+    public function __construct(private FileRepositoryInterface $fileRepository)
+    {}
+
     /**
-     * Get all tasks`
+     * Get all tasks
      *
      * @param array $filters
      * @return LengthAwarePaginator
@@ -71,15 +75,18 @@ class TaskRepository implements TaskRepositoryInterface
     public function create(array $data): Task
     {
         $user = auth()->user();
-        return $user->tasks()->create(
+        $task = $user->tasks()->create(
             [
                 'title' => $data['title'],
                 'description' => $data['description'],
-                'files' => $data['files'] ?? [],
                 'completed' => $data['completed'] ?? false,
                 'completed_at' => $data['completed_at'] ?? null
             ]
         );
+
+       $this->fileRepository->uploadMany($data['files'] ?? [], 'public', $task);
+
+        return $task->load('user', 'files');
     }
 
     /**
@@ -95,7 +102,6 @@ class TaskRepository implements TaskRepositoryInterface
         $task->update([
                 'title' => $data['title'] ?? $task->title,
                 'description' => $data['description'] ?? $task->description,
-                'files' => $data['files'] ?? $task->files,
                 'completed' => $data['completed'] ?? $task->completed,
                 'completed_at' => $data['completed_at'] ?? $task->completed_at
             ]

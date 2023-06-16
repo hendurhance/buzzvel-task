@@ -20,18 +20,8 @@ class Task extends Model
     protected $fillable = [
         'title',
         'description',
-        'files',
         'completed',
         'completed_at'
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'files' => 'array',
     ];
 
     /**
@@ -52,5 +42,13 @@ class Task extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get all of the files for the task.
+     */
+    public function files()
+    {
+        return $this->hasMany(File::class);
     }
 }

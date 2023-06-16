@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,8 @@ class TaskFactory extends Factory
     public function definition(): array
     {
         $bool = $this->faker->boolean;
-        $files = FileFactory::new()->count(3)->create();
+        $fileIds = File::pluck('id')->toArray();
+        $fileArray = [$fileIds, []];
         $userIds = User::pluck('id')->toArray();
         return [
             'user_id' => $this->faker->randomElement($userIds),
@@ -26,7 +28,7 @@ class TaskFactory extends Factory
             'description' => $this->faker->paragraphs(3, true),
             'completed' => $bool,
             'completed_at' => $bool ?  $this->faker->dateTimeBetween('-1 month', 'now') : null,
-            'files' => $files->pluck('id')->toArray()
+            'file' => $this->faker->randomElement($fileArray),
         ];
     }
 }
