@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->longText('description')->nullable();
             $table->boolean('completed')->default(false);
+            $table->json('files')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->timestamp('completed_at')->nullable();
