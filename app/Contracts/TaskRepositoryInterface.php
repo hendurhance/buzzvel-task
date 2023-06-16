@@ -14,10 +14,10 @@ interface TaskRepositoryInterface
     /**
      * Get a task by id
      *
-     * @param string $uuid
+     * @param int $id
      * @return mixed
      */
-    public function findById(string $uuid);
+    public function findById(int $id);
 
     /**
      * Create a new task
@@ -31,16 +31,16 @@ interface TaskRepositoryInterface
      * Update a task
      *
      * @param array $data
-     * @param string $uuid
+     * @param int $id
      * @return mixed
      */
-    public function update(array $data, string $uuid);
+    public function update(array $data, int $id);
 
     /**
      * Delete a task
      *
-     * @param string $uuid
+     * @param int $id
      * @return mixed
      */
-    public function delete(string $uuid);
+    public function delete(int $id);
 }

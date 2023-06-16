@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index()->unique()->comment('UUID to allow easy migration between envs without breaking FK in the logic');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->longText('description')->nullable();

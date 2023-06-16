@@ -3,7 +3,10 @@
 namespace App\Repositories\Task;
 
 use App\Contracts\TaskRepositoryInterface;
+use App\Exceptions\Task\TaskDoesNotExist;
+use App\Exceptions\Task\TaskNotOwnedByUser;
 use App\Models\Task;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -31,8 +34,12 @@ class TaskRepository implements TaskRepositoryInterface
             $query->orderBy($filters['sort'], $filters['order'] ?? 'asc');
         }
 
-        if (isset($filters['from']) || isset($filters['to'])) {
-            $query->whereBetween('created_at', [$filters['from'], $filters['to']]);
+        if (isset($filters['from'])) {
+            $query->where('created_at', '>=', Carbon::parse($filters['from']));
+        }
+
+        if (isset($filters['to'])) {
+            $query->where('created_at', '<=', Carbon::parse($filters['to']));
         }
 
         if (isset($filters['offset'])) {
@@ -45,21 +52,23 @@ class TaskRepository implements TaskRepositoryInterface
     /**
      * Get a task by id
      *
-     * @param string $uuid
+     * @param string $int
      * @return mixed
      */
-    public function findById(string $uuid)
+    public function findById(int $id): ?Task
     {
-        return Task::whereUuid($uuid)->first();
+        return Task::findOr($id, function () {
+            throw new TaskDoesNotExist();
+        })->load('user');
     }
 
     /**
      * Create a new task
      *
      * @param array $data
-     * @return mixed
+     * @return Task
      */
-    public function create(array $data)
+    public function create(array $data): Task
     {
         $user = auth()->user();
         return $user->tasks()->create(
@@ -76,13 +85,13 @@ class TaskRepository implements TaskRepositoryInterface
     /**
      * Update a task
      *
-     * @param string $uuid
+     * @param int $id
      * @param array $data
-     * @return mixed
+     * @return Task
      */
-    public function update(array $data, string $uuid)
+    public function update(array $data, int $id): ?Task
     {
-        $task = $this->findById($uuid);
+        $task = $this->userOwnsTask($id);
         $task->update([
                 'title' => $data['title'] ?? $task->title,
                 'description' => $data['description'] ?? $task->description,
@@ -98,14 +107,27 @@ class TaskRepository implements TaskRepositoryInterface
     /**
      * Delete a task
      *
-     * @param string $uuid
-     * @return mixed
+     * @param int $id
+     * @return void
      */
-    public function delete(string $uuid)
+    public function delete(int $id)
     {
-        $task = $this->findById($uuid);
+        $task = $this->findById($id);
         $task->destroy();
+    }
 
+    /**
+     * User Owns Task
+     *
+     * @param int $id
+     * @return Task
+     */
+    public function userOwnsTask(int $id): ?Task
+    {
+        $task = $this->findById($id);
+        if($task->user_id != auth()->user()->id) {
+            throw new TaskNotOwnedByUser();
+        }
         return $task;
     }
 }
