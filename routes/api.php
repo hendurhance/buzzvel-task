@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\V1\Auth\LoginController;
+use App\Http\Controllers\API\V1\Auth\LogoutController;
+use App\Http\Controllers\API\V1\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('auth')->as('auth.')->group(function (): void {
-    // Route::post('/login', 'AuthController@login')->name('login');
-    // Route::get('/logout', 'AuthController@logout')->name('logout');
-    // Route::post('/create', 'AuthController@create')->name('create');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+    Route::post('/create', [RegisterController::class, 'create'])->name('create');
 });
 
 /*

@@ -7,9 +7,9 @@ use App\Contracts\FileRepositoryInterface;
 use App\Contracts\TaskRepositoryInterface;
 use App\Contracts\UserRepositoryInterface;
 use App\Repositories\Auth\AuthRepository;
-use App\Repositories\Auth\FileRepository;
-use App\Repositories\Auth\TaskRepository;
-use App\Repositories\Auth\UserRepository;
+use App\Repositories\File\FileRepository;
+use App\Repositories\Task\TaskRepository;
+use App\Repositories\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
