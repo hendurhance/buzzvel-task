@@ -35,6 +35,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
+
     protected string $apiVersion = 'V1';
 
     /**
@@ -60,10 +61,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-       Route::middleware('api')
-        ->prefix('api/v1')
-        ->as('api.v1.')
-        ->namespace("{$this->apiNamespace}\{$this->apiVersion}")
-        ->group(base_path('routes/api.php'));
+        Route::middleware('api')
+            ->prefix('api/v1')
+            ->as('api.v1.')
+            ->namespace("{$this->apiNamespace}\{{$this->apiVersion}}")
+            ->group(base_path('routes/api.php'));
     }
 }

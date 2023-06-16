@@ -18,7 +18,6 @@ class LogoutController extends Controller
 
     /**
      * Logout a user
-     *
      */
     public function logout()
     {

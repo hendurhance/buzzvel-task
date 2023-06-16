@@ -15,7 +15,7 @@ class AuthRepository implements AuthRepositoryInterface
      */
     public function login(array $data)
     {
-         $attempt = Auth::attempt($data);
+        $attempt = Auth::attempt($data);
 
         if ($attempt) {
             $user = Auth::user();

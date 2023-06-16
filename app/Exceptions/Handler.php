@@ -59,7 +59,7 @@ class Handler extends ExceptionHandler
             );
         }
 
-         if ($e instanceof TypeError || $e instanceof TypeErrorException){
+        if ($e instanceof TypeError || $e instanceof TypeErrorException){
             return $this->error(
                 'The type of the parameter is not the expected one',
                 Response::HTTP_BAD_REQUEST

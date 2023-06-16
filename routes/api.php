@@ -4,7 +4,6 @@ use App\Http\Controllers\API\V1\Auth\LoginController;
 use App\Http\Controllers\API\V1\Auth\LogoutController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
 use App\Http\Controllers\API\V1\Task\TaskController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*

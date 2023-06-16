@@ -13,6 +13,10 @@ class TaskSeeder extends Seeder
      */
     public function run(): void
     {
-        Task::factory()->count(50)->create();
+        // create 2 or 3 files for each task
+        Task::factory()
+            ->count(50)
+            ->hasFiles(rand(2, 3))
+            ->create();
     }
 }

@@ -6,7 +6,6 @@ use App\Contracts\FileRepositoryInterface;
 use App\Models\File;
 use App\Models\Task;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Collection;
 
 class FileRepository implements FileRepositoryInterface
 {

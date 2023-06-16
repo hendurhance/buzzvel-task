@@ -9,12 +9,12 @@ use App\Exceptions\Task\TaskNotOwnedByUser;
 use App\Models\Task;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\Collection;
 
 class TaskRepository implements TaskRepositoryInterface
 {
     public function __construct(private FileRepositoryInterface $fileRepository)
-    {}
+    {
+    }
 
     /**
      * Get all tasks
@@ -24,31 +24,26 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function all(array $filters): LengthAwarePaginator
     {
-        $query = Task::query()->with('user', 'files');
-
-        if (isset($filters['search'])) {
-            $query->where('title', 'like', '%' . $filters['search'] . '%');
-        }
-
-        if (isset($filters['completed'])) {
-            $query->where('completed', $filters['completed']);
-        }
-
-        if (isset($filters['sort'])) {
-            $query->orderBy($filters['sort'], $filters['order'] ?? 'asc');
-        }
-
-        if (isset($filters['from'])) {
-            $query->where('created_at', '>=', Carbon::parse($filters['from']));
-        }
-
-        if (isset($filters['to'])) {
-            $query->where('created_at', '<=', Carbon::parse($filters['to']));
-        }
-
-        if (isset($filters['offset'])) {
-            $query->offset($filters['offset']);
-        }
+        $query = Task::query()
+            ->with('user', 'files')
+            ->when(isset($filters['search']), function ($query) use ($filters) {
+                $query->where('title', 'like', '%' . $filters['search'] . '%');
+            })
+            ->when(isset($filters['completed']), function ($query) use ($filters) {
+                $query->where('completed', $filters['completed']);
+            })
+            ->when(isset($filters['sort']), function ($query) use ($filters) {
+                $query->orderBy($filters['sort'], $filters['order'] ?? 'asc');
+            })
+            ->when(isset($filters['from']), function ($query) use ($filters) {
+                $query->where('created_at', '>=', Carbon::parse($filters['from']));
+            })
+            ->when(isset($filters['to']), function ($query) use ($filters) {
+                $query->where('created_at', '<=', Carbon::parse($filters['to']));
+            })
+            ->when(isset($filters['offset']), function ($query) use ($filters) {
+                $query->offset($filters['offset']);
+            });
 
         return $query->paginate($filters['limit'] ?? 10);
     }
@@ -84,7 +79,7 @@ class TaskRepository implements TaskRepositoryInterface
             ]
         );
 
-       $this->fileRepository->uploadMany($data['files'] ?? [], $task);
+        $this->fileRepository->uploadMany($data['files'] ?? [], $task);
 
         return $task->load('user', 'files');
     }
@@ -99,13 +94,13 @@ class TaskRepository implements TaskRepositoryInterface
     public function update(array $data, int $id): ?Task
     {
         $task = $this->userOwnsTask($id);
+
         $task->update([
-                'title' => $data['title'] ?? $task->title,
-                'description' => $data['description'] ?? $task->description,
-                'completed' => $data['completed'] ?? $task->completed,
-                'completed_at' => $data['completed'] ? Carbon::now() : null
-            ]
-        );
+            'title' => $data['title'] ?? $task->title,
+            'description' => $data['description'] ?? $task->description,
+            'completed' => $data['completed'] ?? $task->completed,
+            'completed_at' => $data['completed'] ? Carbon::now() : null
+        ]);
 
         return $task;
     }
@@ -131,7 +126,7 @@ class TaskRepository implements TaskRepositoryInterface
     public function userOwnsTask(int $id): ?Task
     {
         $task = $this->findById($id);
-        if($task->user_id != auth()->user()->id) {
+        if ($task->user_id !== auth()->user()->id) {
             throw new TaskNotOwnedByUser();
         }
         return $task;
