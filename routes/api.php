@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\V1\Auth\LoginController;
 use App\Http\Controllers\API\V1\Auth\LogoutController;
 use App\Http\Controllers\API\V1\Auth\RegisterController;
+use App\Http\Controllers\API\V1\Task\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,9 +39,9 @@ Route::prefix('auth')->as('auth.')->group(function (): void {
 */
 
 Route::prefix('task')->as('tasks.')->group(function (): void {
-    // Route::get('/', 'TaskController@index')->name('index');
-    // Route::post('/create', 'TaskController@create')->name('create');
-    // Route::get('/{uuid}', 'TaskController@show')->name('show');
-    // Route::put('/{uuid}', 'TaskController@update')->name('update');
-    // Route::delete('/{uuid}', 'TaskController@delete')->name('delete');
+    Route::get('/', [TaskController::class, 'index'])->name('index');
+    Route::post('/', [TaskController::class, 'store'])->name('create');
+    Route::get('/{uuid}', [TaskController::class, 'show'])->name('show');
+    Route::put('/{uuid}', [TaskController::class, 'update'])->name('update');
+    Route::delete('/{uuid}', [TaskController::class, 'delete'])->name('delete');
 });
