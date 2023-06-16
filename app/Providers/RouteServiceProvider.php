@@ -20,6 +20,24 @@ class RouteServiceProvider extends ServiceProvider
     public const HOME = '/home';
 
     /**
+     * Declare controller namespace for the api routes.
+     *
+     * When present, controller route declarations will automatically be prefixed with this namespace.
+     *
+     * @var string
+     */
+    protected string $apiNamespace = 'App\Http\Controllers\API';
+
+    /**
+     * Declare api version for the api routes.
+     *
+     * When present, controller route declarations will automatically be prefixed with this version.
+     *
+     * @var string
+     */
+    protected string $apiVersion = 'V1';
+
+    /**
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
@@ -29,12 +47,23 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
+            $this->mapApiRoutes();
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
         });
+    }
+
+    /**
+     * Api Routes
+     * @return void
+     */
+    protected function mapApiRoutes()
+    {
+       Route::middleware('api')
+        ->prefix('api/v1')
+        ->as('api.v1.')
+        ->namespace("{$this->apiNamespace}\{$this->apiVersion}")
+        ->group(base_path('routes/api.php'));
     }
 }

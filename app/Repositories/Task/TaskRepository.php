@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Auth;
+namespace App\Repositories\Task;
 
 class TaskRepository
 {}
