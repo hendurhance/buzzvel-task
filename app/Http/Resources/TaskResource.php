@@ -18,7 +18,7 @@ class TaskResource extends JsonResource
             'id' => $this->id,
             'title' => $this->title,
             'description' => $this->description,
-            'files' => $this->files,
+            'files' => FileResource::collection($this->whenLoaded('files')),
             'completed' => $this->completed,
             'completed_at' => $this->completed_at,
             'created_at' => $this->created_at,

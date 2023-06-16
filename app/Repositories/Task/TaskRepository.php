@@ -24,7 +24,7 @@ class TaskRepository implements TaskRepositoryInterface
      */
     public function all(array $filters): LengthAwarePaginator
     {
-        $query = Task::query()->with('user');
+        $query = Task::query()->with('user', 'files');
 
         if (isset($filters['search'])) {
             $query->where('title', 'like', '%' . $filters['search'] . '%');
@@ -63,7 +63,7 @@ class TaskRepository implements TaskRepositoryInterface
     {
         return Task::findOr($id, function () {
             throw new TaskDoesNotExist();
-        })->load('user');
+        })->load('user', 'files');
     }
 
     /**
