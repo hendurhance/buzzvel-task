@@ -75,7 +75,7 @@ class TaskRepository implements TaskRepositoryInterface
                 'title' => $data['title'],
                 'description' => $data['description'] ?? null,
                 'completed' => $data['completed'] ?? false,
-                'completed_at' => $data['completed'] ? Carbon::now() : null
+                'completed_at' => isset($data['completed']) && $data['completed'] === true ? Carbon::now() : null
             ]
         );
 
@@ -99,7 +99,7 @@ class TaskRepository implements TaskRepositoryInterface
             'title' => $data['title'] ?? $task->title,
             'description' => $data['description'] ?? $task->description,
             'completed' => $data['completed'] ?? $task->completed,
-            'completed_at' => $data['completed'] ? Carbon::now() : null
+            'completed_at' => isset($data['completed']) && $data['completed'] === true ? Carbon::now() : null
         ]);
 
         return $task;
