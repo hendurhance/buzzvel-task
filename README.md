@@ -1,66 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Buzzvel Task API | [John Task List](/2023%20-%20Back-End%20Developer%20Test.pdf)
+This is a solution for the Buzzvel Task API, which is a simple API that allows you to create, update, delete and list tasks.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Story
+João is tired of forgetting his tasks that he need to do daily. Your goal is to create a tool that helps João to solve his problem in a simple way.
 
-## About Laravel
+## Solution
+The solution was developed using Laravel 10, PHP 8.2, MySQL 8.0.23, Docker and Docker Compose. The solution is a REST API that allows you to create, update, delete and list tasks. A user can only update and delete his own tasks. The API is protected by a Sanctum token. The API is documented using Postman.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Installation
+- Clone the repository
+```bash
+git clone https://github.com/hendurhance/buzzvel-task.git
+```
+- Enter the project folder
+```bash
+cd buzzvel-task
+```
+- Copy the .env.example file to .env
+```bash
+cp .env.example .env
+```
+- Run the containers
+```bash
+docker-compose up -d
+```
+- Install the dependencies
+```bash
+docker exec -it buzzvel-app-1 bash
+```
+- Make sure you are in the /var/www/html folder
+```bash
+cd /var/www/html
+```
+- Install the dependencies
+```bash
+composer install
+```
+- Generate Application Key
+```
+php artisan key:generate
+```
+- Storage Link & Grant Permission
+```
+php artisan storage:link
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+chmod -R 755 storage
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Run the migrations and seeds
+```bash
+php artisan migrate --seed
+```
+- Run the tests
+```bash
+php artisan test
+```
+- Run PHP Insights
+```bash
+php artisan insights
+```
 
-## Learning Laravel
+### Requirements
+- [✅] Unique identifier of the task (ID)
+- [✅] Task Title
+- [✅] Task Description
+- [✅] Attachment File(s)
+- [✅] Mark as Completed (indicates if the task is completed or not)
+- [✅] Dates ( date that the task was created, completed, updated and deleted)
+- [✅] User (user that created the task)
+  
+### Additional Requirements
+- [✅] The API must return the correct HTTP status code and a message explaining the error.
+- [✅] The API must return the validation errors in a readable format.
+- [✅] The API must return errors when a resource is not found/do not exist.
+- [✅] The project has 21 tests.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Specifications
+- PHP 8.2
+- Laravel 10
+- Repository Design Pattern
+- Dependency Injection
+- 20+ Tests
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Database Schema
+![Database Schema](/drawSQL-buzzvel-test-export-2023-06-12.png)
 
-## Laravel Sponsors
+| Table | Type | Description |
+| --- | --- | --- |
+| users | table | The users table contains the registered users. |
+| tasks | table | The tasks table contains the registered tasks. |
+| files | table | The files table contains the attached files in the tasks. |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### API Endpoints
+The API is documented using Postman. You can import the [Buzzvel Task API.postman_collection.json](/buzzvel_test.postman_collection.json) file into Postman to see the documentation.
+| Method | URI | Description | Parameters | Body | Response |
+| --- | --- | --- | --- | --- | --- |
+| POST | /api/register | Register a new user. | - | name, email, password, password_confirmation | 201 |
+| POST | /api/login | Login a user. | - | email, password | 200 |
+| GET | /api/logout | Logout a user. | - | - | 204 |
+| GET | /api/tasks | List all tasks. | search, from, to, sort, order, offset, limit, completed | - | 200 |
+| POST | /api/tasks | Create a new task. | - | title, description, completed, files | 201 |
+| GET | /api/tasks/{id} | Show a task. | - | - | 200 |
+| PUT | /api/tasks/{id} | Update a task. | - | title, description, completed, files | 200 |
+| DELETE | /api/tasks/{id} | Delete a task. | - | - | 204 |
