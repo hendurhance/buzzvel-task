@@ -33,12 +33,10 @@ class CreateTaskTest extends TestCase
 
     public function test_create_task_with_valid_data_successful()
     {
-        $file = UploadedFile::fake()->image('avatar.jpg');
         $response = $this->postJson(route('api.v1.tasks.store'), [
             'title' => 'Task 1',
             'description' => 'Task 1 description',
             'completed' => '0',
-            'files' => [$file]
         ], [
             'Authorization' => 'Bearer ' . $this->accessToken
         ]);
