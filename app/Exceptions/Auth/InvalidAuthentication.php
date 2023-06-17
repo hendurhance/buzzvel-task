@@ -6,7 +6,7 @@ use App\Traits\HttpResponse;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthenticationException extends Exception
+class InvalidAuthentication extends Exception
 {
     use HttpResponse;
 

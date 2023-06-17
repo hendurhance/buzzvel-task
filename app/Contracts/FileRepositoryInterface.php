@@ -12,8 +12,7 @@ interface FileRepositoryInterface
     /**
      * Upload many files.
      *
-     * @param array<UploadedFile> $files
-     * @param string $disk
+     * @param array $files
      * @param Task $task
      * @return void
      */

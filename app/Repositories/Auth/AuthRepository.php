@@ -3,7 +3,7 @@
 namespace App\Repositories\Auth;
 
 use App\Contracts\AuthRepositoryInterface;
-use App\Exceptions\Auth\AuthenticationException;
+use App\Exceptions\Auth\InvalidAuthentication;
 use Illuminate\Support\Facades\Auth;
 
 class AuthRepository implements AuthRepositoryInterface
@@ -22,7 +22,7 @@ class AuthRepository implements AuthRepositoryInterface
             return $user->createToken('auth_token')->plainTextToken;
         }
 
-        throw new AuthenticationException('Invalid credentials');
+        throw new InvalidAuthentication('Invalid credentials');
     }
 
     /**

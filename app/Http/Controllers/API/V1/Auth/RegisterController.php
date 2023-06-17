@@ -20,9 +20,9 @@ class RegisterController extends Controller
     /**
      * Create a new user
      *
-     * @param \Illuminate\Http\Request $request
+     * @param CreateUserRequest $request
      */
-    public function create(CreateUserRequest $request)#: JsonResponse
+    public function create(CreateUserRequest $request): JsonResponse
     {
         $this->userRepository->create($request->validated());
         return $this->success(null, 'User created successfully', Response::HTTP_CREATED);

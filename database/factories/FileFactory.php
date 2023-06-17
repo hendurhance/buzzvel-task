@@ -18,7 +18,7 @@ class FileFactory extends Factory
     {
         return [
             'name' => $this->faker->name,
-            'path' => $this->faker->image('public/storage', 640, 480, null, false),
+            'path' => $this->faker->image('public/storage/app/attachments', 640, 480, null, false),
             'size' => $this->faker->randomNumber(2),
             'type' => $this->faker->mimeType,
         ];

@@ -19,6 +19,25 @@ class LogoutController extends Controller
     /**
      * Logout a user
      */
+    // uses bearertoken
+    /**
+     * @OA\Get(
+     *   path="auth/logout",
+     *  tags={"Auth"},
+     * summary="Logout a user",
+     * description="Logout a user",
+     * operationId="logout",
+     * security={{"bearerAuth":{}}},
+     * @OA\Response(
+     * response=200,
+     * description="User logged out successfully",
+     * ),
+     * @OA\Response(
+     * response=401,
+     * description="Unauthenticated",
+     * ),
+     * ),
+     */
     public function logout()
     {
         $this->authRepository->logout();

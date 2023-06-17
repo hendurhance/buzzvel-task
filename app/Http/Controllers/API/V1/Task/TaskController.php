@@ -8,13 +8,14 @@ use App\Http\Requests\Task\CreateTaskRequest;
 use App\Http\Requests\Task\GetTasksRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class TaskController extends Controller
 {
     /**
      * TaskController Constructor
+     *
+     * @return JsonResponse
      */
     public function __construct(private TaskRepositoryInterface $taskRepository)
     {

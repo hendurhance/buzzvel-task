@@ -14,11 +14,37 @@ class LoginController extends Controller
     public function __construct(private AuthRepositoryInterface $authRepository)
     {
     }
-
+    
     /**
      * Login a user
      *
-     * @param \Illuminate\Http\Request $request
+     * @param LoginUserRequest $request
+     */
+    /**
+     * @OA\Post(
+     *     path="auth/login",
+     *     tags={"Auth"},
+     *     summary="Login a user",
+     *     description="Login a user",
+     *    operationId="login",
+     *    @OA\RequestBody(
+     *       required=true,
+     *      description="Pass user credentials",
+     *     @OA\JsonContent(
+     *       required={"email","password"},
+     *      @OA\Property(property="email", type="string", format="email", example="john@example.com"),
+     *     @OA\Property(property="password", type="string", format="password", example="password"),
+     *    ),
+     *   ),
+     *  @OA\Response(
+     *     response=200,
+     *   description="User logged in successfully",
+     * ),
+     * @OA\Response(
+     *  response=401,
+     * description="Invalid credentials",
+     * ),
+     * ),
      */
     public function login(LoginUserRequest $request)
     {
