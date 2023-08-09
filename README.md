@@ -4,7 +4,7 @@ This is a solution for the Buzzvel Task API, which is a simple API that allows y
 ## Story
 João is tired of forgetting his tasks that he need to do daily. Your goal is to create a tool that helps João to solve his problem in a simple way.
 
-## Solution | [Live Demo](https://buzzvel-50c147ba7cf3.herokuapp.com/) | [Swagger Documentation](https://app.swaggerhub.com/apis-docs/hendurhance/BuzzvelAPI/1.0.0)
+## Solution | [Live Demo](https://buzzvel-50c147ba7cf3.herokuapp.com/) | [Swagger Documentation](https://app.swaggerhub.com/apis-docs/hendurhance/buzzvel/1.0.0)
 The solution was developed using Laravel 10, PHP 8.2, MySQL 8.0.23, Docker and Docker Compose. The solution is a REST API that allows you to create, update, delete and list tasks. A user can only update and delete his own tasks. The API is protected by a Sanctum token. The API is documented using Postman.
 
 User Login
